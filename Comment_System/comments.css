@@ -1,0 +1,89 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    line-height: 1.2;
+    font-size: 1.2rem;
+}
+
+div#root > div {
+    padding: 24px;
+    padding-top: calc(84px + 24px);
+}
+
+ul > li {
+    list-style-type: none;
+}
+
+ul > li:not(:last-child) {
+    margin-bottom: 4px;
+}
+
+li > div {
+    padding: 12px;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+div > img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+div > p:first-child {
+    font-weight: 800;
+    font-size: 14px;
+}
+
+div > p:nth-child(2) {
+    font-size: 12px;
+    margin: 4px 0;
+}
+
+div > p:nth-child(2) > span {
+    font-size: 12px;
+    font-weight: 400;
+    color: #aaa;
+    margin-right: 12px;
+}
+
+form {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+    gap: 6px;
+}
+
+form > input:first-child {
+    padding: 4px;
+    flex: 1 1 0;
+}
+
+form > input:nth-child(2) {
+    padding: 4px;
+    flex: 1 1 0;
+}
+
+form > textarea {
+    width: 100%;
+    resize: none;
+    padding: 4px;
+    font-family: sans-serif;
+}
+
+form > button {
+    padding: 4px 8px;
+    cursor: pointer;
+}
+
+input,
+textarea {
+    font-size: 1.2rem;
+}

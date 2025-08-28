@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Weather App</title>
+        <link rel="stylesheet" href="weather.css" />
+        <link rel="stylesheet" href="../main.css" />
+    </head>
+    <body>
+        <div id="root"></div>
+        <script
+            crossorigin
+            src="https://unpkg.com/react@18/umd/react.development.js"
+        ></script>
+        <script
+            crossorigin
+            src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+        ></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+        <script type="text/babel">
+            const Weather = () => {
+                const [weatherData, setWeatherData] = React.useState({
+                    hanoi: {
+                        city: "Hà Nội",
+                        temp: 28,
+                        weather: "Nắng",
+                        humidity: 65,
+                    },
+                    hcm: {
+                        city: "TP.HCM",
+                        temp: 32,
+                        weather: "Có mây",
+                        humidity: 78,
+                    },
+                    danang: {
+                        city: "Đà Nẵng",
+                        temp: 30,
+                        weather: "Mưa nhẹ",
+                        humidity: 82,
+                    },
+                });
+                const [selectedCity, setSelectedCity] = React.useState("");
+
+                console.log(weatherData);
+
+                const handleClick = () => {
+                    setWeatherData({
+                        ...weatherData,
+                        [selectedCity]: {
+                            ...weatherData[selectedCity],
+                            temp: (() => {
+                                if (weatherData[selectedCity].temp >= 45) {
+                                    return (
+                                        weatherData[selectedCity].temp -
+                                        Math.floor(Math.random() * 6)
+                                    );
+                                } else if (
+                                    weatherData[selectedCity].temp <= 5
+                                ) {
+                                    return (
+                                        weatherData[selectedCity].temp +
+                                        Math.floor(Math.random() * 6)
+                                    );
+                                } else {
+                                    return Math.floor(Math.random() * 2)
+                                        ? weatherData[selectedCity].temp +
+                                              Math.floor(Math.random() * 6)
+                                        : weatherData[selectedCity].temp -
+                                              Math.floor(Math.random() * 6);
+                                }
+                            })(),
+                            humidity: (() => {
+                                if (weatherData[selectedCity].humidity >= 90) {
+                                    return (
+                                        weatherData[selectedCity].humidity -
+                                        Math.floor(Math.random() * 6)
+                                    );
+                                } else if (
+                                    weatherData[selectedCity].humidity <= 10
+                                ) {
+                                    return (
+                                        weatherData[selectedCity].humidity +
+                                        Math.floor(Math.random() * 6)
+                                    );
+                                } else {
+                                    return Math.floor(Math.random() * 2)
+                                        ? weatherData[selectedCity].humidity +
+                                              Math.floor(Math.random() * 6)
+                                        : weatherData[selectedCity].humidity -
+                                              Math.floor(Math.random() * 6);
+                                }
+                            })(),
+                            weather: ["Nắng", "Có mây", "Mưa nhẹ"].at(
+                                Math.floor(Math.random() * 3)
+                            ),
+                        },
+                    });
+                };
+                return (
+                    <div>
+                        <select
+                            value={selectedCity}
+                            onChange={(e) => setSelectedCity(e.target.value)}
+                        >
+                            <option value="" disabled hidden>
+                                Lựa chọn thành phố
+                            </option>
+                            <option value="hanoi">Hà Nội</option>
+                            <option value="hcm">TP.HCM</option>
+                            <option value="danang">Đà Nẵng</option>
+                        </select>
+
+                        {selectedCity && (
+                            <>
+                                <div>
+                                    <p>{weatherData[selectedCity].city}</p>
+
+                                    <p>
+                                        {weatherData[selectedCity].weather ===
+                                        "Nắng" ? (
+                                            <img
+                                                src="https://www.svgrepo.com/show/407540/sun.svg"
+                                                alt="sun shine"
+                                                width="128"
+                                                height="128"
+                                            />
+                                        ) : weatherData[selectedCity]
+                                              .weather === "Có mây" ? (
+                                            <img
+                                                src="https://www.svgrepo.com/show/452177/cloud.svg"
+                                                alt="cloud"
+                                                width="128"
+                                                height="128"
+                                            />
+                                        ) : (
+                                            <img
+                                                src="https://www.svgrepo.com/show/274804/rain.svg"
+                                                alt="rain"
+                                                width="128"
+                                                height="128"
+                                            />
+                                        )}
+                                    </p>
+                                    <div>
+                                        <p>
+                                            Nhiệt độ:{" "}
+                                            {weatherData[selectedCity].temp}°C
+                                        </p>
+                                        <p>
+                                            Độ ẩm:{" "}
+                                            {weatherData[selectedCity].humidity}
+                                            %
+                                        </p>
+                                    </div>
+                                </div>
+                                <button onClick={handleClick}>Làm mới</button>
+                            </>
+                        )}
+                    </div>
+                );
+            };
+            const Header = ({ children }) => {
+                return (
+                    <>
+                        <nav>
+                            <ul>
+                                <li>
+                                    <a href="../Counter_App/counter.html">
+                                        Counter App
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../Todo_List_App/todo.html">
+                                        {" "}
+                                        Todo List App
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../Profile_App/profile.html">
+                                        Profile App
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../Product_List/products.html">
+                                        Product List
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../Comment_System/comments.html">
+                                        Comment System
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../Weather_App/weather.html">
+                                        Weather Apps
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        {children}
+                    </>
+                );
+            };
+            const root = ReactDOM.createRoot(document.getElementById("root"));
+            root.render(
+                <Header>
+                    <Weather />
+                </Header>
+            );
+        </script>
+    </body>
+</html>

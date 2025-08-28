@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Todo App</title>
+        <link rel="stylesheet" href="todo.css" />
+        <link rel="stylesheet" href="../main.css" />
+    </head>
+    <body>
+        <div id="root"></div>
+        <script
+            crossorigin
+            src="https://unpkg.com/react@18/umd/react.development.js"
+        ></script>
+        <script
+            crossorigin
+            src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+        ></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+        <script type="text/babel">
+            let uniqId = 0;
+
+            const Todo = () => {
+                const [inputValue, setInputValue] = React.useState("");
+                const [todos, setTodos] = React.useState([]);
+                const [removeTodoID, setRemoveTodoID] = React.useState(null);
+
+                const totalTask = todos.length;
+                const completedTask = todos.reduce(
+                    (total, todo) => (todo.completed ? total + 1 : total),
+                    0
+                );
+                const remainTask = totalTask - completedTask;
+
+                const handleInputChange = (e) => {
+                    setInputValue(e.target.value);
+                };
+
+                const handleSubmit = (e) => {
+                    e.preventDefault();
+                    if (inputValue.trim()) {
+                        setTodos([
+                            ...todos,
+                            {
+                                id: ++uniqId,
+                                text: inputValue,
+                                completed: false,
+                            },
+                        ]);
+                        setInputValue("");
+                    }
+                };
+
+                const handleDelete = (id) => {
+                    console.log(id);
+                    setRemoveTodoID(id);
+                };
+
+                const handleRemove = (id) => {
+                    setTodos(todos.filter((todo) => todo.id !== id));
+                    setRemoveTodoID(null);
+                };
+
+                const handleCancel = () => {
+                    setRemoveTodoID(null);
+                };
+
+                const handleCheckbox = (id) => {
+                    setTodos(
+                        todos.map((todo) => {
+                            if (todo.id === id) {
+                                todo.completed = !todo.completed;
+                            }
+                            return todo;
+                        })
+                    );
+                };
+
+                return (
+                    <div>
+                        <form action="">
+                            <input
+                                value={inputValue}
+                                onChange={handleInputChange}
+                                placeholder="Nhập task mới..."
+                            />
+                            <button type="submit" onClick={handleSubmit}>
+                                Thêm
+                            </button>
+                        </form>
+                        {totalTask === 0 ? (
+                            <p>Chưa có task nào. Hãy thêm task đầu tiên!</p>
+                        ) : (
+                            <ul>
+                                {todos.map((todo) => (
+                                    <li key={todo.id}>
+                                        <input
+                                            type="checkbox"
+                                            value={todo.completed}
+                                            onChange={() =>
+                                                handleCheckbox(todo.id)
+                                            }
+                                        />
+                                        <span
+                                            style={{
+                                                textDecoration: todo.completed
+                                                    ? "line-through"
+                                                    : "none",
+                                            }}
+                                        >
+                                            {todo.text}
+                                        </span>
+                                        <button
+                                            onClick={() =>
+                                                handleDelete(todo.id)
+                                            }
+                                        >
+                                            Xóa
+                                        </button>
+                                        {removeTodoID &&
+                                            removeTodoID === todo.id && (
+                                                <div
+                                                    className="modal"
+                                                    onClick={handleCancel}
+                                                >
+                                                    <div
+                                                        className="modal__inner"
+                                                        onClick={(e) =>
+                                                            e.stopPropagation()
+                                                        }
+                                                    >
+                                                        <p>Xóa {todo.text}</p>
+                                                        <div>
+                                                            <button
+                                                                onClick={() =>
+                                                                    handleRemove(
+                                                                        todo.id
+                                                                    )
+                                                                }
+                                                            >
+                                                                Xóa
+                                                            </button>
+                                                            <button
+                                                                onClick={
+                                                                    handleCancel
+                                                                }
+                                                            >
+                                                                Hủy
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )}
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                        <p>
+                            Tổng: {totalTask} task(s), Hoàn thành:{" "}
+                            {completedTask} task(s), Còn lại: {remainTask}{" "}
+                            task(s)
+                        </p>
+                    </div>
+                );
+            };
+
+            const Header = ({ children }) => {
+                return (
+                    <>
+                        <nav>
+                            <ul>
+                                <li>
+                                    <a href="../Counter_App/counter.html">
+                                        Counter App
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../Todo_List_App/todo.html">
+                                        {" "}
+                                        Todo List App
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../Profile_App/profile.html">
+                                        Profile App
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../Product_List/products.html">
+                                        Product List
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../Comment_System/comments.html">
+                                        Comment System
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../Weather_App/weather.html">
+                                        Weather Apps
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        {children}
+                    </>
+                );
+            };
+            const root = ReactDOM.createRoot(document.getElementById("root"));
+            root.render(
+                <Header>
+                    <Todo />
+                </Header>
+            );
+        </script>
+    </body>
+</html>

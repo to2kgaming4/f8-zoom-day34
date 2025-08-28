@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Counter App</title>
+        <link rel="stylesheet" href="counter.css" />
+        <link rel="stylesheet" href="../main.css" />
+    </head>
+    <body>
+        <div id="root"></div>
+        <script
+            crossorigin
+            src="https://unpkg.com/react@18/umd/react.development.js"
+        ></script>
+        <script
+            crossorigin
+            src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+        ></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+        <script type="text/babel">
+            const Counter = () => {
+                const [count, setCount] = React.useState(0);
+                const [statusCount, setStatusCount] =
+                    React.useState("Bằng không");
+
+                return (
+                    <div>
+                        <p>
+                            Count is:{" "}
+                            <span
+                                style={{
+                                    color:
+                                        count === 0
+                                            ? "gray"
+                                            : count > 0
+                                            ? "red"
+                                            : "green",
+                                }}
+                            >
+                                {count}
+                            </span>
+                        </p>
+                        <button onClick={() => setCount(count + 1)}>
+                            Tăng
+                        </button>
+                        <button onClick={() => setCount(0)}>Reset</button>
+                        <button onClick={() => setCount(count - 1)}>
+                            Giảm
+                        </button>
+                        <p>
+                            Trạng thái:{" "}
+                            {count === 0
+                                ? "Bằng không"
+                                : count > 0
+                                ? "Dương"
+                                : "Âm"}
+                        </p>
+                    </div>
+                );
+            };
+            const Header = ({ children }) => {
+                return (
+                    <>
+                        <nav>
+                            <ul>
+                                <li>
+                                    <a href="../Counter_App/counter.html">
+                                        Counter App
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../Todo_List_App/todo.html">
+                                        {" "}
+                                        Todo List App
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../Profile_App/profile.html">
+                                        Profile App
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../Product_List/products.html">
+                                        Product List
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../Comment_System/comments.html">
+                                        Comment System
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../Weather_App/weather.html">
+                                        Weather Apps
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        {children}
+                    </>
+                );
+            };
+            const root = ReactDOM.createRoot(document.getElementById("root"));
+            root.render(
+                <Header>
+                    <Counter />
+                </Header>
+            );
+        </script>
+    </body>
+</html>

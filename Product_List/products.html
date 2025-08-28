@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Product List</title>
+        <link rel="stylesheet" href="products.css" />
+        <link rel="stylesheet" href="../main.css" />
+
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        />
+    </head>
+    <body>
+        <div id="root"></div>
+        <script
+            crossorigin
+            src="https://unpkg.com/react@18/umd/react.development.js"
+        ></script>
+        <script
+            crossorigin
+            src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+        ></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+        <script type="text/babel">
+            const Products = () => {
+                const [products, setProducts] = React.useState([]);
+                const [loading, setLoading] = React.useState(false);
+                const [detailProduct, setDetailProduct] = React.useState(null);
+                const handleClick = (product) => {
+                    setDetailProduct(product);
+                };
+
+                const handleClose = (e) => {
+                    setDetailProduct(null);
+                };
+
+                React.useEffect(() => {
+                    setLoading(true);
+                    fetch(
+                        "https://jsonplaceholder.typicode.com/posts?_limit=12"
+                    )
+                        .then((res) => res.json())
+                        .then((data) => setProducts(data))
+                        .finally(() => setLoading(false));
+                }, []);
+
+                return (
+                    <div>
+                        <ul>
+                            {products.map((product) => (
+                                <li key={product.id}>
+                                    <div>
+                                        <p>Bài viết số: {product.id}</p>
+                                        <h3>{product.title}</h3>
+                                        <p>{product.body}</p>
+                                        <button
+                                            type="button"
+                                            onClick={() => handleClick(product)}
+                                        >
+                                            Xem chi tiết
+                                        </button>
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
+                        {loading && <p>Đang tải...</p>}
+                        {detailProduct && (
+                            <div className="modal" onClick={handleClose}>
+                                <div
+                                    className="modal__inner"
+                                    onClick={(e) => e.stopPropagation()}
+                                >
+                                    <h3>{detailProduct.title}</h3>
+                                    <p>{detailProduct.body}</p>
+                                    <button type="button" onClick={handleClose}>
+                                        Đóng
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                );
+            };
+
+            const Header = ({ children }) => {
+                return (
+                    <>
+                        <nav>
+                            <ul>
+                                <li>
+                                    <a href="../Counter_App/counter.html">
+                                        Counter App
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../Todo_List_App/todo.html">
+                                        {" "}
+                                        Todo List App
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../Profile_App/profile.html">
+                                        Profile App
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../Product_List/products.html">
+                                        Product List
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../Comment_System/comments.html">
+                                        Comment System
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../Weather_App/weather.html">
+                                        Weather Apps
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        {children}
+                    </>
+                );
+            };
+            const root = ReactDOM.createRoot(document.getElementById("root"));
+            root.render(
+                <Header>
+                    <Products />
+                </Header>
+            );
+        </script>
+    </body>
+</html>

@@ -1,0 +1,37 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+nav {
+    background-color: rgba(144, 238, 144, 0.4);
+    font-family: sans-serif;
+    padding: 16px 32px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+}
+
+nav > ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+nav > ul > li > a {
+    display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    font-size: 24px;
+    background-color: lightgreen;
+    padding: 12px 24px;
+    border-radius: 12px;
+    transition: 0.2s linear;
+}
+
+nav > ul > li > a:hover {
+    transform: translateY(-4px);
+}
